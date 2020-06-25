@@ -27,21 +27,6 @@ int WINAPI WinMain(
 		return 0;
 	}
 
-	// テクスチャ読み込み
-	// 第一引数の文字列で読み込んだテクスチャを登録する
-	// 描画や取得は登録した文字列で指定する
-	Engine::LoadTexture("Enemy", "Res/Enemy.png");
-
-	// サウンド読み込み
-	// 第一引数の文字列で読み込んだサウンドを登録する
-	// 描画や取得は登録した文字列で指定する
-	Engine::LoadSoundFile("Bgm", "Res/Bgm.wav");
-	Engine::LoadSoundFile("Se", "Res/Se.wav");
-
-	// サウンド再生
-	// 指定されたキーワードのサウンドファイルを再生する
-	Engine::PlaySound("Bgm", true);
-
 	while (true)
 	{
 		bool message_ret = false;
@@ -84,48 +69,25 @@ void GameProcessing()
 	// 入力データの更新
 	Engine::Update();
 
-	float speed = 2.0f;
 
-	g_Angle += 1.0f;
-
+	//========================================================
 	// キーボードの入力取得
-	if (Engine::IsKeyboardKeyHeld(DIK_LEFT) == true)
-	{
-		g_Position.X -= speed;
-	}
-	else if (Engine::IsKeyboardKeyHeld(DIK_RIGHT) == true)
-	{
-		g_Position.X += speed;
-	}
+	//========================================================
 
-	// ゲームパッドの入力取得
-	if (Engine::IsGamePadButtonHeld(GamePadKind::GamePadKindUp))
-	{
-		g_Position.Y -= speed;
-	}
-	else if (Engine::IsGamePadButtonHeld(GamePadKind::GamePadKindDown))
-	{
-		g_Position.Y += speed;
-	}
+	//if (Engine::IsKeyboardKeyPushed(DIK_SPACE) == true)
+	//{
+	//	// キーが押された瞬間の処理
+	//}
 
-	// マウスの入力取得
-	if (Engine::IsMouseButtonPushed(MouseButton::Left))
-	{
-		g_Position = Vec2(200, 200);
-	}
-	else if (Engine::IsMouseButtonPushed(MouseButton::Right))
-	{
-		g_Position = Vec2(400, 300);
-	}
+	//if (Engine::IsKeyboardKeyHeld(DIK_LEFT) == true)
+	//{
+	//	// キーが押されている間の処理
+	//}
 
-	if (Engine::IsKeyboardKeyReleased(DIK_A))
-	{
-		// 重複再生
-		// 指定されたキーワードのサウンドファイル再生する
-		// StartPlayingDuplicateSoundでは同じサウンドファイルでも重複して再生可能
-		Engine::PlayDuplicateSound("Se");
-		Engine::PlayDuplicateSound("Se");
-	}
+	//if (Engine::IsKeyboardKeyReleased(DIK_A))
+	//{
+	//	// キーが離された瞬間の処理
+	//}
 }
 
 void DrawProcessing()
@@ -133,12 +95,6 @@ void DrawProcessing()
 	// 描画開始
 	// 描画処理を実行する場合、必ず最初実行する
 	Engine::StartDrawing(0);
-
-	// テクスチャ描画
-	// キーワードで指定されたテクスチャを描画する
-	// DrawTextureはテクスチャをそのまま描画する
-	// 一部切り取って描画する場合はDrawTextureUVを使用する
-	Engine::DrawTexture(g_Position.X, g_Position.Y, "Enemy", 128, g_Angle, g_Scale.X, g_Scale.Y);
 
 	// フォント描画
 	Engine::DrawFont(0.0f, 0.0f, "FontSize:Small", FontSize::Small, FontColor::White);
